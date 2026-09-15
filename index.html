@@ -62,8 +62,8 @@ button,input,select{font:inherit}button{color:inherit}
 .clock-face{width:190px;height:190px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.22))}
 .clock-info{min-width:0;display:flex;flex-direction:column;gap:13px}
 .eyebrow{margin:0;color:var(--muted);font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-.digital-row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.digital-main{display:flex;align-items:baseline;color:var(--gold);font-size:clamp(2.6rem,8vw,3.6rem);font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.digital-row{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.digital-main{display:flex;align-items:baseline;color:var(--gold);font-size:clamp(4.4rem,12vw,7rem);font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 .digital-main .colon{margin:0 .02em}
 .secs-badge{flex-shrink:0;margin-bottom:.4em;color:var(--cream);font-weight:800;font-size:1.2rem;font-variant-numeric:tabular-nums;letter-spacing:0}
 .ampm-badge{flex-shrink:0;margin-bottom:.35em;padding:5px 11px;border-radius:8px;background:var(--gold);color:#231a0d;font-weight:800;font-size:.92rem;letter-spacing:.02em}
@@ -101,7 +101,7 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 @keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{50%{transform:scale(1.05)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-@media(max-width:680px){.wrap{padding:16px 14px 50px}.clock-card{grid-template-columns:1fr;text-align:center;gap:20px;padding:30px 20px;min-height:auto}.clock-face{width:165px;height:165px;margin:auto}.clock-info{align-items:center}.digital-row{justify-content:center}.digital-main{font-size:clamp(2.8rem,14vw,4.2rem)}.date-row{justify-content:center}.listen-area{justify-content:center}.transcript-wrap{margin-left:auto;margin-right:auto;text-align:left}}
+@media(max-width:680px){.wrap{padding:16px 14px 50px}.clock-card{grid-template-columns:1fr;text-align:center;gap:20px;padding:30px 20px;min-height:auto}.clock-face{width:165px;height:165px;margin:auto}.clock-info{align-items:center}.digital-row{justify-content:center}.digital-main{font-size:clamp(3.4rem,17vw,5.2rem)}.date-row{justify-content:center}.listen-area{justify-content:center}.transcript-wrap{margin-left:auto;margin-right:auto;text-align:left}}
 @media(max-width:600px){
   .control-row{flex-direction:column;align-items:stretch;gap:10px}
   .label{width:100%}
@@ -114,8 +114,15 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
   .time-picker select{width:auto;flex:1}
   .segmented-sm{width:auto;flex:0 0 auto}
 }
-.clock-card.view-digital{grid-template-columns:1fr}
+.clock-card.view-digital{grid-template-columns:1fr;justify-items:center}
 .clock-card.view-digital .clock-face{display:none}
+.clock-card.view-digital .clock-info{align-items:center;text-align:center;width:100%}
+.clock-card.view-digital .digital-row{justify-content:center}
+.clock-card.view-digital .date-row{justify-content:center}
+.clock-card.view-digital .digital-main{font-size:clamp(5rem,13vw,8rem)}
+.clock-card.view-digital .secs-badge{font-size:1.4rem}
+.clock-card.view-digital .ampm-badge{font-size:1.05rem;padding:6px 14px}
+.clock-card.view-digital .transcript-label{justify-content:center}
 .clock-card.view-analog{grid-template-columns:1fr}
 .clock-card.view-analog .digital-row{display:none}
 .clock-card.view-analog .clock-face{width:230px;height:230px;margin:0 auto}
@@ -145,11 +152,10 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
       <span>Settings</span>
     </button>
   </header>
- 
+
   <main class="clock-card" aria-label="Live clock">
     <svg class="clock-face" id="face" viewBox="0 0 200 200" aria-hidden="true"></svg>
     <section class="clock-info">
-      <p class="eyebrow">Current time</p>
       <div class="digital-row" aria-label="Current time">
         <div class="digital-main">
           <span id="hh">12</span><span class="colon">:</span><span id="mm">00</span>
@@ -167,7 +173,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
         </div>
       </div>
       <p class="alarm-badge" id="alarm-badge" style="display:none"></p>
- 
+
       <div class="transcript-wrap" id="transcript-wrap">
         <div class="transcript-label">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v10H7l-3 3V5Z"/><path d="M8 9h8M8 12h5"/></svg>
@@ -177,7 +183,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
       </div>
     </section>
   </main>
- 
+
   <div class="alarm-overlay" id="alarm-overlay" role="alertdialog" aria-modal="true" aria-labelledby="alarm-title">
     <div class="alarm-box">
       <div class="alarm-icon" aria-hidden="true">⏰</div>
@@ -189,7 +195,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
       </div>
     </div>
   </div>
- 
+
   <div class="settings-overlay" id="settings-overlay">
     <section class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title-el">
     <div class="settings-box">
@@ -197,7 +203,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
         <div><h2 class="settings-title" id="settings-title-el">Settings</h2><p class="settings-subtitle">Choose the features that work best for you.</p></div>
         <button class="close-menu" id="close-menu" type="button" aria-label="Close settings">×</button>
       </div>
- 
+
       <div class="control-row"><div class="label">Clock display<small>Choose which clock style to show.</small></div>
         <div class="segmented" id="view-segmented" role="radiogroup" aria-label="Clock display style">
           <button class="seg-btn" data-view="analog" role="radio" aria-checked="false" type="button">Analog</button>
@@ -226,7 +232,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
       <div class="control-row"><div class="label">Sound volume<small id="vol-readout">70%</small></div><input type="range" id="vol" min="0" max="100" value="70" aria-label="Sound volume"></div>
       <div class="control-row"><div class="label">Voice<small>Choose an available voice on this device.</small></div><select id="voice-select" aria-label="Speech voice"></select></div>
       <div class="control-row"><div class="label">Speaking rate<small id="rate-readout">0.95×</small></div><input type="range" id="rate" min="50" max="150" value="95" aria-label="Speaking rate"></div>
- 
+
       <div class="settings-actions">
         <button class="btn primary" id="say-time" type="button">🔊 Say the time</button>
         <button class="btn" id="preview-chime" type="button">♪ Preview chime</button>
@@ -238,13 +244,13 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
     </section>
   </div>
 </div>
- 
+
 <script>
 (() => {
   const STORAGE_KEY='accessible-clock-prefs-v3';
   const prefs={chimeOn:true,tickOn:false,voiceOn:true,transcriptOn:false,hour24:false,volume:.70,rate:.95,voiceURI:'',clockView:'both',alarmOn:false,alarmTime:'07:30',snoozeMinutes:9};
   try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(saved&&typeof saved==='object')Object.assign(prefs,saved)}catch(e){}
- 
+
   const els={
     face:document.getElementById('face'),hh:document.getElementById('hh'),mm:document.getElementById('mm'),ss:document.getElementById('ss'),ampm:document.getElementById('ampm'),dateline:document.getElementById('dateline'),
     listenArea:document.getElementById('listen-area'),listenBtn:document.getElementById('listen-btn'),transcriptWrap:document.getElementById('transcript-wrap'),transcript:document.getElementById('transcript'),
@@ -252,7 +258,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
     vol:document.getElementById('vol'),rate:document.getElementById('rate'),volReadout:document.getElementById('vol-readout'),rateReadout:document.getElementById('rate-readout'),voiceSelect:document.getElementById('voice-select'),sayTime:document.getElementById('say-time'),previewChime:document.getElementById('preview-chime'),previewTick:document.getElementById('preview-tick'),log:document.getElementById('log'),
     alarmSwitch:document.getElementById('alarm-switch'),alarmHourSelect:document.getElementById('alarm-hour'),alarmMinuteSelect:document.getElementById('alarm-minute'),alarmPeriod:document.getElementById('alarm-period'),snoozeLength:document.getElementById('snooze-length'),snoozeReadout:document.getElementById('snooze-readout'),alarmBadge:document.getElementById('alarm-badge'),alarmOverlay:document.getElementById('alarm-overlay'),alarmTimeDisplay:document.getElementById('alarm-time-display'),alarmSnoozeBtn:document.getElementById('alarm-snooze'),alarmDismissBtn:document.getElementById('alarm-dismiss')
   };
- 
+
   let audioCtx=null,masterGain=null,soundReady=false,timer=null,lastChimeHour='',lastVoiceMinute='',lastTickSecond=-1;
   let alarmToneInterval=null,snoozeUntil=null,lastAlarmKey='',wakeLock=null;
   const ALARM_STATE_KEY='accessible-clock-alarm-state-v1';
@@ -266,11 +272,11 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
     try{wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null})}catch(e){/* unsupported or denied — the catch-up alarm logic still covers this case */}
   }
   function releaseWakeLock(){if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null}}
- 
+
   function savePrefs(){localStorage.setItem(STORAGE_KEY,JSON.stringify({chimeOn:prefs.chimeOn,tickOn:prefs.tickOn,voiceOn:prefs.voiceOn,transcriptOn:prefs.transcriptOn,hour24:prefs.hour24,volume:prefs.volume,rate:prefs.rate,voiceURI:prefs.voiceURI,clockView:prefs.clockView,alarmOn:prefs.alarmOn,alarmTime:prefs.alarmTime,snoozeMinutes:prefs.snoozeMinutes}))}
   function log(message){els.log.textContent=message}
   function setSwitch(button,on){button.classList.toggle('on',on);button.setAttribute('aria-pressed',String(on))}
- 
+
   function ensureAudio(){
     if(!audioCtx){const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return null;audioCtx=new Ctx();masterGain=audioCtx.createGain();masterGain.gain.value=prefs.volume;masterGain.connect(audioCtx.destination)}
     return audioCtx;
@@ -293,14 +299,14 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
     const voices=speechSynthesis.getVoices();
     return voices.find(v=>v.voiceURI===prefs.voiceURI)||voices[0]||null;
   }
- 
+
   function speechText(d){
     const voice=selectedVoice();
     const lang=((voice&&voice.lang)||'en').toLowerCase();
     const code=lang.split('-')[0];
     const h24=d.getHours(),m=d.getMinutes(),mm=String(m).padStart(2,'0');
     const h12=h24%12||12, morning=h24<12;
- 
+
     const known={
       en:()=>prefs.hour24
         ?(m===0?`The time is ${h24} hundred hours.`:`The time is ${h24} ${mm}.`)
@@ -319,18 +325,18 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
       hi:()=>prefs.hour24?`समय ${h24} बजकर ${m} मिनट है।`:`समय ${h12} बजकर ${m} मिनट ${morning?'सुबह':'शाम'} है।`,
       sw:()=>prefs.hour24?`Saa ni ${h24}:${mm}.`:`Saa ni ${h12}:${mm} ${morning?'asubuhi':'jioni'}.`
     };
- 
+
     if(known[code])return {text:known[code](),lang};
- 
+
     try{
       return {text:new Intl.DateTimeFormat(lang,{hour:'numeric',minute:'2-digit',hour12:!prefs.hour24}).format(d),lang};
     }catch(e){
       return {text:new Intl.DateTimeFormat(undefined,{hour:'numeric',minute:'2-digit',hour12:!prefs.hour24}).format(d),lang};
     }
   }
- 
+
   const transcriptLabels={en:'Spoken time',es:'Hora hablada',fr:'Heure parlée',de:'Gesprochene Zeit',it:'Ora parlata',pt:'Hora falada',nl:'Gesproken tijd',ru:'Время вслух',zh:'语音报时',ja:'音声時刻',ko:'음성 시간',ar:'الوقت المنطوق',hi:'बोला गया समय',sw:'Muda unaosemwa'};
- 
+
   function showTranscript(text,speaking=false,lang='en'){
     if(!prefs.transcriptOn){els.transcriptWrap.classList.remove('show');return}
     els.transcript.textContent=text;
@@ -340,7 +346,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
     const labelEl=els.transcriptWrap.querySelector('.transcript-label span');
     if(labelEl)labelEl.textContent=label;
   }
- 
+
   function speakTime(d=new Date()){
     if(!('speechSynthesis'in window)){log('Speech is not available in this browser.');return false}
     if(!soundReady){unlockAudio(false).then(()=>{if(soundReady)speakTime(d)});return false}
@@ -483,7 +489,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
     els.listenArea.style.display=prefs.voiceOn?'flex':'none';if(prefs.transcriptOn&&prefs.voiceOn&&els.transcript.textContent)els.transcriptWrap.classList.add('show');else if(!prefs.transcriptOn||!prefs.voiceOn)els.transcriptWrap.classList.remove('show');
     applyClockView();renderAlarmBadge();
   }
- 
+
   function openSettings(){
     els.settingsOverlay.classList.add('open');
     document.body.classList.add('modal-open');
@@ -550,4 +556,3 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
 </script>
 </body>
 </html>
- 
