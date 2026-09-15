@@ -468,7 +468,7 @@ input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:1
     const alarmKey=`${d.toDateString()}-${prefs.alarmTime}`;
     const [alarmH,alarmM]=prefs.alarmTime.split(':').map(Number);
     const nowMinutes=d.getHours()*60+m,alarmMinutes=alarmH*60+alarmM;
-    if(prefs.alarmOn&&nowMinutes>=alarmMinutes&&alarmKey!==lastAlarmKey&&!els.alarmOverlay.classList.contains('open')){fireAlarm()}
+    if(prefs.alarmOn&&nowMinutes>=alarmMinutes&&nowMinutes<alarmMinutes+15&&alarmKey!==lastAlarmKey&&!els.alarmOverlay.classList.contains('open')){fireAlarm()}
     if(snoozeUntil&&Date.now()>=snoozeUntil&&!els.alarmOverlay.classList.contains('open')){snoozeUntil=null;fireAlarm()}
   }
   function tick(fromVisibility=false){const d=new Date();renderTime(d);if(!fromVisibility&&prefs.tickOn&&d.getSeconds()!==lastTickSecond)playTick();lastTickSecond=d.getSeconds();maybeAnnounce(d,fromVisibility)}
