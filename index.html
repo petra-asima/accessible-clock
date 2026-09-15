@@ -33,14 +33,25 @@ body::before{width:360px;height:360px;left:-180px;bottom:-110px;background:radia
 body::after{width:420px;height:420px;right:-210px;top:25%;background:radial-gradient(circle,rgba(244,200,115,.10),rgba(244,200,115,0) 68%)}
 button,input,select{font:inherit}button{color:inherit}
 .wrap{width:min(900px,100%);margin:0 auto;padding:24px 20px 70px}
-.topbar{height:52px;display:flex;justify-content:flex-end;align-items:center;margin-bottom:14px}
+.topbar{height:auto;display:flex;justify-content:flex-end;align-items:center;margin-bottom:14px}
 .menu-btn{
-  width:46px;height:46px;border:1px solid var(--border);border-radius:14px;display:grid;place-items:center;
-  background:rgba(32,40,50,.9);cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:.18s ease
+  width:auto;height:48px;padding:0 18px 0 14px;border:1px solid rgba(244,200,115,.4);border-radius:999px;
+  display:inline-flex;align-items:center;gap:9px;background:rgba(32,40,50,.95);cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);transition:.18s ease;color:var(--gold);font-weight:800;font-size:.92rem
 }
-.menu-btn:hover{transform:translateY(-2px);background:var(--panel-2);border-color:#566273}
+.menu-btn:hover{transform:translateY(-2px);background:var(--panel-2);border-color:var(--gold)}
 .menu-btn:active{transform:translateY(0) scale(.97)}
-.menu-btn svg{width:21px;height:21px}
+.menu-btn svg{width:23px;height:23px;stroke:var(--gold);flex-shrink:0}
+.segmented{display:flex;background:#12181f;border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px;min-width:230px}
+.seg-btn{flex:1;padding:8px 10px;border:none;border-radius:8px;background:transparent;color:var(--muted);font-weight:700;font-size:.82rem;cursor:pointer;transition:.15s ease}
+.seg-btn:hover{color:var(--cream)}
+.seg-btn.active{background:var(--green);color:#12251d}
+.seg-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.segmented-sm{min-width:0;width:auto;flex-shrink:0}
+.segmented-sm .seg-btn{flex:0 0 auto;padding:8px 13px}
+.time-picker{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.time-picker select{min-width:0;max-width:none;width:66px;text-align:center;flex-shrink:0}
+.tp-colon{font-weight:800;color:var(--cream);font-size:1.05rem}
 .clock-card{
   position:relative;overflow:hidden;display:grid;grid-template-columns:190px 1fr;align-items:center;gap:38px;
   min-height:360px;padding:42px;border:1px solid var(--border);border-radius:28px;
@@ -49,47 +60,89 @@ button,input,select{font:inherit}button{color:inherit}
 }
 .clock-card::before{content:"";position:absolute;width:260px;height:260px;right:-120px;top:-140px;border-radius:50%;background:rgba(244,200,115,.06);pointer-events:none}
 .clock-face{width:190px;height:190px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.22))}
-.clock-info{min-width:0}.eyebrow{margin:0 0 7px;color:var(--muted);font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-.digital{display:flex;align-items:baseline;flex-wrap:nowrap;white-space:nowrap;color:var(--gold);font-size:clamp(3.1rem,9vw,5rem);font-weight:900;letter-spacing:-.045em;line-height:1;font-variant-numeric:tabular-nums}
-.digital .secs{font-size:.38em;color:var(--muted);font-weight:700;letter-spacing:0;margin-left:4px}
-.digital .ampm{font-size:.28em;color:var(--cream);font-weight:800;letter-spacing:.02em;margin-left:12px}.digital .ampm.hidden{display:none}
-.date-row{display:flex;align-items:center;gap:12px;min-height:38px;flex-wrap:wrap}.date-line{margin-top:13px;color:var(--cream);font-size:1rem;font-weight:600}
+.clock-info{min-width:0;display:flex;flex-direction:column;gap:13px}
+.eyebrow{margin:0;color:var(--muted);font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.digital-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.digital-main{display:flex;align-items:baseline;color:var(--gold);font-size:clamp(2.6rem,8vw,3.6rem);font-weight:900;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.digital-main .colon{margin:0 .02em}
+.digital-main .secs{font-size:.42em;color:var(--muted);font-weight:700;letter-spacing:0;margin-left:6px}
+.ampm-badge{flex-shrink:0;margin-bottom:.35em;padding:5px 11px;border-radius:8px;background:var(--gold);color:#231a0d;font-weight:800;font-size:.92rem;letter-spacing:.02em}
+.ampm-badge.hidden{display:none}
+.date-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.date-line{color:var(--cream);font-size:1rem;font-weight:600}
 .listen-area{display:flex;align-items:center;margin-top:10px}.listen-btn{
   width:38px;height:38px;padding:0;display:grid;place-items:center;border:1px solid rgba(130,190,164,.52);border-radius:50%;
   background:rgba(23,51,40,.72);color:#bde0d0;cursor:pointer;box-shadow:0 5px 16px rgba(0,0,0,.13);transition:.18s ease
 }
 .listen-btn:hover{transform:translateY(-1px);background:#204636;border-color:var(--green)}.listen-btn:active{transform:scale(.95)}.listen-btn svg{width:18px;height:18px}
 .listen-btn.speaking{animation:pulse .8s ease infinite}
-/* Optional speech transcript: only occupies space when enabled. */
-.transcript-wrap{display:none;margin-top:14px;max-width:620px}.transcript-wrap.show{display:block}
+.transcript-wrap{display:none;max-width:620px}.transcript-wrap.show{display:block}
 .transcript-label{display:flex;align-items:center;gap:7px;margin-bottom:6px;color:var(--muted);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .transcript-label svg{width:14px;height:14px}.transcript-box{
   border-left:3px solid var(--green);padding:9px 13px;background:rgba(130,190,164,.07);border-radius:0 10px 10px 0;
   color:var(--cream);font-size:.94rem;font-weight:650;line-height:1.45
 }.transcript-box.speaking{background:rgba(130,190,164,.13);border-left-color:var(--gold)}
-.settings-panel{display:none;margin-top:16px;animation:slideDown .18s ease}.settings-panel.open{display:block}
-.settings-box{padding:20px;border:1px solid var(--border);border-radius:20px;background:rgba(32,40,50,.88);box-shadow:0 12px 38px rgba(0,0,0,.16)}
-.settings-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.settings-title{margin:0;font-family:var(--serif);font-size:1.45rem;color:var(--gold)}
-.settings-subtitle{margin:4px 0 0;color:var(--muted);font-size:.82rem;font-weight:500}.close-menu{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;font-size:1.3rem}.close-menu:hover{background:var(--panel-2);color:var(--cream)}
+.settings-overlay{display:none;position:fixed;inset:0;z-index:50;background:rgba(8,11,15,.68);padding:5vh 16px 24px;overflow-y:auto}
+.settings-overlay.open{display:flex;justify-content:center;align-items:flex-start}
+.settings-panel{width:min(640px,100%)}
+.settings-box{padding:20px;border:1px solid var(--border);border-radius:20px;background:#1c242d;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:slideDown .18s ease}
+.settings-header{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:10px;background:#1c242d;border-bottom:1px solid var(--border)}.settings-title{margin:0;font-family:var(--serif);font-size:1.45rem;color:var(--gold)}
+.settings-subtitle{margin:4px 0 0;color:var(--muted);font-size:.82rem;font-weight:500}.close-menu{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;font-size:1.3rem;flex-shrink:0}.close-menu:hover{background:var(--panel-2);color:var(--cream)}
+.settings-done{width:100%;margin-top:16px;padding:13px;border:1px solid var(--green);border-radius:12px;background:var(--green);color:#0f231b;font-weight:900;font-size:.94rem;cursor:pointer}
+.settings-done:hover{background:#93cbb4}
+body.modal-open{overflow:hidden}
 .control-row{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;padding:12px 14px;margin-top:9px;border:1px solid var(--border);border-radius:14px;background:var(--panel-3);transition:border-color .18s ease}.control-row:hover{border-color:#465365}
 .label{flex:1;color:var(--cream);font-size:.94rem;font-weight:700}.label small{display:block;margin-top:3px;color:var(--muted);font-size:.76rem;font-weight:500}
 .switch{position:relative;width:54px;height:30px;border:0;border-radius:999px;background:#4d5967;cursor:pointer;flex-shrink:0;transition:.18s ease}.switch::after{content:"";position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#e9e2d5;transition:.18s ease;box-shadow:0 2px 6px rgba(0,0,0,.22)}.switch.on{background:var(--green)}.switch.on::after{transform:translateX(24px);background:#163329}
-select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:#12181f;color:var(--cream);font-weight:600}input[type=range]{width:min(240px,42%);accent-color:var(--green);cursor:pointer}
+select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:#12181f;color:var(--cream);font-weight:600;text-overflow:ellipsis;overflow:hidden;white-space:nowrap}input[type=range]{width:min(240px,42%);accent-color:var(--green);cursor:pointer}
 .settings-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border:1px solid var(--border);border-radius:11px;background:var(--panel-2);color:var(--cream);font-weight:800;font-size:.84rem;cursor:pointer;transition:.18s ease}.btn:hover{background:#303b48;border-color:#566273;transform:translateY(-1px)}.btn.primary{border-color:rgba(244,200,115,.55);color:var(--gold)}
 .log{min-height:1.2em;margin:12px 2px 0;color:var(--muted);font-size:.78rem;font-weight:600}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 @keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{50%{transform:scale(1.05)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-@media(max-width:680px){.wrap{padding:16px 14px 50px}.clock-card{grid-template-columns:1fr;text-align:center;gap:20px;padding:30px 20px;min-height:auto}.clock-face{width:165px;height:165px;margin:auto}.digital{justify-content:center;font-size:clamp(2.8rem,14vw,4.2rem)}.listen-area{margin-top:8px;justify-content:center}.transcript-wrap{margin-left:auto;margin-right:auto;text-align:left}}
-@media(max-width:480px){.control-row{align-items:center}.label{font-size:.86rem}select{min-width:0;max-width:48%;font-size:.78rem}input[type=range]{width:44%}}
+@media(max-width:680px){.wrap{padding:16px 14px 50px}.clock-card{grid-template-columns:1fr;text-align:center;gap:20px;padding:30px 20px;min-height:auto}.clock-face{width:165px;height:165px;margin:auto}.clock-info{align-items:center}.digital-row{justify-content:center}.digital-main{font-size:clamp(2.8rem,14vw,4.2rem)}.date-row{justify-content:center}.listen-area{justify-content:center}.transcript-wrap{margin-left:auto;margin-right:auto;text-align:left}}
+@media(max-width:600px){
+  .control-row{flex-direction:column;align-items:stretch;gap:10px}
+  .label{width:100%}
+  select{width:100%;max-width:100%;min-width:0;font-size:.88rem}
+  input[type=range]{width:100%}
+  input[type=time]{width:100%}
+  .segmented{width:100%;min-width:0}
+  .switch{align-self:flex-start}
+  .time-picker{width:100%}
+  .time-picker select{width:auto;flex:1}
+  .segmented-sm{width:auto;flex:0 0 auto}
+}
+.clock-card.view-digital{grid-template-columns:1fr}
+.clock-card.view-digital .clock-face{display:none}
+.clock-card.view-analog{grid-template-columns:1fr}
+.clock-card.view-analog .digital-row{display:none}
+.clock-card.view-analog .clock-face{width:230px;height:230px;margin:0 auto}
+.clock-card.view-analog .clock-info{text-align:center}
+.clock-card.view-analog .date-row{justify-content:center}
+.alarm-badge{margin:0;color:var(--gold);font-size:.86rem;font-weight:800}
+input[type=time]{padding:8px 11px;border:1px solid var(--border);border-radius:10px;background:#12181f;color:var(--cream);font-weight:700;color-scheme:dark}
+.alarm-overlay{display:none;position:fixed;inset:0;z-index:60;background:rgba(20,12,8,.82);padding:20px}
+.alarm-overlay.open{display:flex;align-items:center;justify-content:center}
+.alarm-box{width:min(420px,100%);text-align:center;padding:38px 30px;border-radius:24px;background:linear-gradient(160deg,#2b2015,#221a12);border:1px solid #6b4a2a;box-shadow:0 30px 80px rgba(0,0,0,.5);animation:alarmPop .25s ease}
+.alarm-icon{font-size:3.2rem;margin-bottom:6px;display:inline-block;animation:ring 1s ease infinite}
+.alarm-box h2{margin:6px 0 4px;font-family:var(--serif);font-weight:600;font-size:1.6rem;color:var(--gold)}
+.alarm-time{margin:0 0 22px;font-size:2.6rem;font-weight:900;color:#fff3df;font-variant-numeric:tabular-nums}
+.alarm-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.alarm-actions .btn{padding:13px 22px;font-size:.94rem}
+.alarm-actions .btn.primary{background:var(--gold);color:#231a0d;border-color:var(--gold)}
+@keyframes alarmPop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes ring{0%,100%{transform:rotate(0)}20%{transform:rotate(-12deg)}40%{transform:rotate(10deg)}60%{transform:rotate(-8deg)}80%{transform:rotate(6deg)}}
+.clock-card.view-analog .eyebrow{text-align:center}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="topbar">
-    <button class="menu-btn" id="menu-btn" type="button" aria-label="Open settings" aria-expanded="false" title="Settings">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <button class="menu-btn" id="menu-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="settings-overlay" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>Settings</span>
     </button>
   </header>
 
@@ -97,8 +150,11 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
     <svg class="clock-face" id="face" viewBox="0 0 200 200" aria-hidden="true"></svg>
     <section class="clock-info">
       <p class="eyebrow">Current time</p>
-      <div class="digital" aria-label="Current time">
-        <span id="hh">12</span>:<span id="mm">00</span><span class="secs">:<span id="ss">00</span></span><span class="ampm" id="ampm">AM</span>
+      <div class="digital-row" aria-label="Current time">
+        <div class="digital-main">
+          <span id="hh">12</span><span class="colon">:</span><span id="mm">00</span><span class="secs">:<span id="ss">00</span></span>
+        </div>
+        <span class="ampm-badge" id="ampm">AM</span>
       </div>
       <div class="date-row">
         <div class="date-line" id="dateline"></div>
@@ -109,6 +165,7 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
           </button>
         </div>
       </div>
+      <p class="alarm-badge" id="alarm-badge" style="display:none"></p>
 
       <div class="transcript-wrap" id="transcript-wrap">
         <div class="transcript-label">
@@ -120,13 +177,46 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
     </section>
   </main>
 
-  <section class="settings-panel" id="settings-panel" aria-label="Clock settings">
+  <div class="alarm-overlay" id="alarm-overlay" role="alertdialog" aria-modal="true" aria-labelledby="alarm-title">
+    <div class="alarm-box">
+      <div class="alarm-icon" aria-hidden="true">⏰</div>
+      <h2 id="alarm-title">Time to wake up</h2>
+      <p class="alarm-time" id="alarm-time-display">7:30 AM</p>
+      <div class="alarm-actions">
+        <button class="btn" id="alarm-snooze" type="button">Snooze</button>
+        <button class="btn primary" id="alarm-dismiss" type="button">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-overlay" id="settings-overlay">
+    <section class="settings-panel" id="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title-el">
     <div class="settings-box">
       <div class="settings-header">
-        <div><h2 class="settings-title">Settings</h2><p class="settings-subtitle">Choose the features that work best for you.</p></div>
+        <div><h2 class="settings-title" id="settings-title-el">Settings</h2><p class="settings-subtitle">Choose the features that work best for you.</p></div>
         <button class="close-menu" id="close-menu" type="button" aria-label="Close settings">×</button>
       </div>
 
+      <div class="control-row"><div class="label">Clock display<small>Choose which clock style to show.</small></div>
+        <div class="segmented" id="view-segmented" role="radiogroup" aria-label="Clock display style">
+          <button class="seg-btn" data-view="analog" role="radio" aria-checked="false" type="button">Analog</button>
+          <button class="seg-btn" data-view="digital" role="radio" aria-checked="false" type="button">Digital</button>
+          <button class="seg-btn active" data-view="both" role="radio" aria-checked="true" type="button">Both</button>
+        </div>
+      </div>
+      <div class="control-row"><div class="label">Alarm<small>Ring once at a set time each day.</small></div><button class="switch" id="alarm-switch" aria-pressed="false" aria-label="Toggle alarm"></button></div>
+      <div class="control-row"><div class="label">Alarm time<small>When the alarm should ring.</small></div>
+        <div class="time-picker">
+          <select id="alarm-hour" aria-label="Alarm hour"></select>
+          <span class="tp-colon">:</span>
+          <select id="alarm-minute" aria-label="Alarm minute"></select>
+          <div class="segmented segmented-sm" id="alarm-period" role="radiogroup" aria-label="AM or PM">
+            <button class="seg-btn active" data-period="AM" role="radio" aria-checked="true" type="button">AM</button>
+            <button class="seg-btn" data-period="PM" role="radio" aria-checked="false" type="button">PM</button>
+          </div>
+        </div>
+      </div>
+      <div class="control-row"><div class="label">Snooze length<small id="snooze-readout">9 minutes</small></div><input type="range" id="snooze-length" min="1" max="20" value="9" aria-label="Snooze length in minutes"></div>
       <div class="control-row"><div class="label">24-hour time<small>Switch between 12-hour and 24-hour display.</small></div><button class="switch" id="hour24-switch" aria-pressed="false" aria-label="Toggle 24-hour time"></button></div>
       <div class="control-row"><div class="label">Hourly chime<small>Play a gentle chime at the start of every hour.</small></div><button class="switch on" id="chime-switch" aria-pressed="true" aria-label="Toggle hourly chime"></button></div>
       <div class="control-row"><div class="label">Clock ticking<small>Hear a subtle tick every second, like a traditional clock.</small></div><button class="switch" id="tick-switch" aria-pressed="false" aria-label="Toggle clock ticking"></button></div>
@@ -142,26 +232,41 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
         <button class="btn" id="preview-tick" type="button">♩ Preview tick</button>
       </div>
       <p class="log" id="log" role="status" aria-live="polite"></p>
+      <button class="settings-done" id="settings-done" type="button">Done</button>
     </div>
-  </section>
+    </section>
+  </div>
 </div>
 
 <script>
 (() => {
   const STORAGE_KEY='accessible-clock-prefs-v3';
-  const prefs={chimeOn:true,tickOn:false,voiceOn:true,transcriptOn:false,hour24:false,volume:.70,rate:.95,voiceURI:''};
+  const prefs={chimeOn:true,tickOn:false,voiceOn:true,transcriptOn:false,hour24:false,volume:.70,rate:.95,voiceURI:'',clockView:'both',alarmOn:false,alarmTime:'07:30',snoozeMinutes:9};
   try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(saved&&typeof saved==='object')Object.assign(prefs,saved)}catch(e){}
 
   const els={
     face:document.getElementById('face'),hh:document.getElementById('hh'),mm:document.getElementById('mm'),ss:document.getElementById('ss'),ampm:document.getElementById('ampm'),dateline:document.getElementById('dateline'),
     listenArea:document.getElementById('listen-area'),listenBtn:document.getElementById('listen-btn'),transcriptWrap:document.getElementById('transcript-wrap'),transcript:document.getElementById('transcript'),
-    settingsPanel:document.getElementById('settings-panel'),menuBtn:document.getElementById('menu-btn'),closeMenu:document.getElementById('close-menu'),hour24Switch:document.getElementById('hour24-switch'),chimeSwitch:document.getElementById('chime-switch'),tickSwitch:document.getElementById('tick-switch'),voiceSwitch:document.getElementById('voice-switch'),transcriptSwitch:document.getElementById('transcript-switch'),
-    vol:document.getElementById('vol'),rate:document.getElementById('rate'),volReadout:document.getElementById('vol-readout'),rateReadout:document.getElementById('rate-readout'),voiceSelect:document.getElementById('voice-select'),sayTime:document.getElementById('say-time'),previewChime:document.getElementById('preview-chime'),previewTick:document.getElementById('preview-tick'),log:document.getElementById('log')
+    clockCard:document.querySelector('.clock-card'),settingsOverlay:document.getElementById('settings-overlay'),settingsPanel:document.getElementById('settings-panel'),settingsDone:document.getElementById('settings-done'),viewSegmented:document.getElementById('view-segmented'),menuBtn:document.getElementById('menu-btn'),closeMenu:document.getElementById('close-menu'),hour24Switch:document.getElementById('hour24-switch'),chimeSwitch:document.getElementById('chime-switch'),tickSwitch:document.getElementById('tick-switch'),voiceSwitch:document.getElementById('voice-switch'),transcriptSwitch:document.getElementById('transcript-switch'),
+    vol:document.getElementById('vol'),rate:document.getElementById('rate'),volReadout:document.getElementById('vol-readout'),rateReadout:document.getElementById('rate-readout'),voiceSelect:document.getElementById('voice-select'),sayTime:document.getElementById('say-time'),previewChime:document.getElementById('preview-chime'),previewTick:document.getElementById('preview-tick'),log:document.getElementById('log'),
+    alarmSwitch:document.getElementById('alarm-switch'),alarmHourSelect:document.getElementById('alarm-hour'),alarmMinuteSelect:document.getElementById('alarm-minute'),alarmPeriod:document.getElementById('alarm-period'),snoozeLength:document.getElementById('snooze-length'),snoozeReadout:document.getElementById('snooze-readout'),alarmBadge:document.getElementById('alarm-badge'),alarmOverlay:document.getElementById('alarm-overlay'),alarmTimeDisplay:document.getElementById('alarm-time-display'),alarmSnoozeBtn:document.getElementById('alarm-snooze'),alarmDismissBtn:document.getElementById('alarm-dismiss')
   };
 
   let audioCtx=null,masterGain=null,soundReady=false,timer=null,lastChimeHour='',lastVoiceMinute='',lastTickSecond=-1;
+  let alarmToneInterval=null,snoozeUntil=null,lastAlarmKey='',wakeLock=null;
+  const ALARM_STATE_KEY='accessible-clock-alarm-state-v1';
+  try{
+    const savedState=JSON.parse(localStorage.getItem(ALARM_STATE_KEY)||'null');
+    if(savedState){lastAlarmKey=savedState.lastAlarmKey||'';snoozeUntil=savedState.snoozeUntil||null}
+  }catch(e){}
+  function saveAlarmState(){try{localStorage.setItem(ALARM_STATE_KEY,JSON.stringify({lastAlarmKey,snoozeUntil}))}catch(e){}}
+  async function requestWakeLock(){
+    if(!('wakeLock'in navigator)||wakeLock)return;
+    try{wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null})}catch(e){/* unsupported or denied — the catch-up alarm logic still covers this case */}
+  }
+  function releaseWakeLock(){if(wakeLock){wakeLock.release().catch(()=>{});wakeLock=null}}
 
-  function savePrefs(){localStorage.setItem(STORAGE_KEY,JSON.stringify({chimeOn:prefs.chimeOn,tickOn:prefs.tickOn,voiceOn:prefs.voiceOn,transcriptOn:prefs.transcriptOn,hour24:prefs.hour24,volume:prefs.volume,rate:prefs.rate,voiceURI:prefs.voiceURI}))}
+  function savePrefs(){localStorage.setItem(STORAGE_KEY,JSON.stringify({chimeOn:prefs.chimeOn,tickOn:prefs.tickOn,voiceOn:prefs.voiceOn,transcriptOn:prefs.transcriptOn,hour24:prefs.hour24,volume:prefs.volume,rate:prefs.rate,voiceURI:prefs.voiceURI,clockView:prefs.clockView,alarmOn:prefs.alarmOn,alarmTime:prefs.alarmTime,snoozeMinutes:prefs.snoozeMinutes}))}
   function log(message){els.log.textContent=message}
   function setSwitch(button,on){button.classList.toggle('on',on);button.setAttribute('aria-pressed',String(on))}
 
@@ -188,9 +293,6 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
     return voices.find(v=>v.voiceURI===prefs.voiceURI)||voices[0]||null;
   }
 
-  // Speech synthesis does not translate English text when a different voice is selected.
-  // Build the actual sentence in the language of the selected voice so both audio and
-  // the on-screen transcript match the selected language.
   function speechText(d){
     const voice=selectedVoice();
     const lang=((voice&&voice.lang)||'en').toLowerCase();
@@ -219,8 +321,6 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
 
     if(known[code])return {text:known[code](),lang};
 
-    // For an unsupported language, let the browser format the time in that locale.
-    // This is still preferable to displaying English transcript text for another-language voice.
     try{
       return {text:new Intl.DateTimeFormat(lang,{hour:'numeric',minute:'2-digit',hour12:!prefs.hour24}).format(d),lang};
     }catch(e){
@@ -267,6 +367,90 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
     const ha=(hour12%12)*30+minute*.5,ma=minute*6,sa=second*6;const hand=(angle,length,width,stroke)=>`<line x1="100" y1="100" x2="${100+length*Math.sin(angle*Math.PI/180)}" y2="${100-length*Math.cos(angle*Math.PI/180)}" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round"/>`;
     svg.innerHTML=`<circle cx="100" cy="100" r="94" fill="#1c242d" stroke="#3d4855" stroke-width="2"/>${ticks}${hand(ha,47,6,'#eee5d5')}${hand(ma,70,3.8,'#f4c873')}${hand(sa,76,1.5,'#82bea4')}<circle cx="100" cy="100" r="5" fill="#f4c873"/>`;
   }
+  function formatAlarmTime(hhmm,use24h){
+    const [h,m]=hhmm.split(':').map(Number);
+    if(use24h)return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+    const h12=h%12||12;
+    return `${h12}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`;
+  }
+  function populateAlarmPickers(){
+    els.alarmHourSelect.innerHTML='';
+    for(let h=1;h<=12;h++){const o=document.createElement('option');o.value=String(h);o.textContent=String(h);els.alarmHourSelect.appendChild(o)}
+    els.alarmMinuteSelect.innerHTML='';
+    for(let m=0;m<60;m++){const o=document.createElement('option');o.value=String(m);o.textContent=String(m).padStart(2,'0');els.alarmMinuteSelect.appendChild(o)}
+  }
+  function syncAlarmPickers(){
+    const [h24,m]=prefs.alarmTime.split(':').map(Number);
+    const period=h24<12?'AM':'PM',h12=h24%12||12;
+    els.alarmHourSelect.value=String(h12);
+    els.alarmMinuteSelect.value=String(m);
+    els.alarmPeriod.querySelectorAll('.seg-btn').forEach(btn=>{
+      const active=btn.dataset.period===period;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-checked',String(active));
+    });
+  }
+  function updateAlarmTimeFromPickers(){
+    const h12=Number(els.alarmHourSelect.value),m=Number(els.alarmMinuteSelect.value);
+    const period=els.alarmPeriod.querySelector('.seg-btn.active')?.dataset.period||'AM';
+    let h24=h12%12;if(period==='PM')h24+=12;
+    prefs.alarmTime=`${String(h24).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+    savePrefs();renderAlarmBadge();
+    log(`Alarm time set to ${formatAlarmTime(prefs.alarmTime,prefs.hour24)}.`);
+  }
+  function renderAlarmBadge(){
+    if(prefs.alarmOn){
+      els.alarmBadge.style.display='block';
+      els.alarmBadge.textContent=`⏰ Alarm set for ${formatAlarmTime(prefs.alarmTime,prefs.hour24)}`;
+    } else {
+      els.alarmBadge.style.display='none';
+    }
+  }
+  function startAlarmTone(){
+    stopAlarmTone();
+    alarmToneInterval=setInterval(()=>{
+      if(!soundReady)return;
+      playTone(880,.22,.1,'square');
+      setTimeout(()=>{if(soundReady)playTone(659,.22,.1,'square')},240);
+    },600);
+  }
+  function stopAlarmTone(){
+    if(alarmToneInterval){clearInterval(alarmToneInterval);alarmToneInterval=null}
+  }
+  function fireAlarm(){
+    els.alarmTimeDisplay.textContent=formatAlarmTime(prefs.alarmTime,prefs.hour24);
+    els.alarmOverlay.classList.add('open');
+    document.body.classList.add('modal-open');
+    unlockAudio(false).then(ready=>{if(ready)startAlarmTone()});
+    if('speechSynthesis'in window){
+      const utter=new SpeechSynthesisUtterance(`Wake up. It's ${formatAlarmTime(prefs.alarmTime,false)}.`);
+      utter.rate=prefs.rate;
+      const voice=selectedVoice();if(voice)utter.voice=voice;
+      speechSynthesis.cancel();speechSynthesis.speak(utter);
+    }
+    log('Alarm is ringing.');
+    els.alarmDismissBtn.focus();
+  }
+  function dismissAlarm(){
+    els.alarmOverlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    stopAlarmTone();
+    snoozeUntil=null;
+    const d=new Date();lastAlarmKey=`${d.toDateString()}-${prefs.alarmTime}`;
+    saveAlarmState();
+    log('Alarm dismissed.');
+    els.menuBtn.focus();
+  }
+  function snoozeAlarm(){
+    els.alarmOverlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    stopAlarmTone();
+    const d=new Date();lastAlarmKey=`${d.toDateString()}-${prefs.alarmTime}`;
+    snoozeUntil=Date.now()+prefs.snoozeMinutes*60000;
+    saveAlarmState();
+    log(`Alarm snoozed for ${prefs.snoozeMinutes} minute${prefs.snoozeMinutes===1?'':'s'}.`);
+    els.menuBtn.focus();
+  }
   function renderTime(d=new Date()){
     const h24=d.getHours(),m=d.getMinutes(),s=d.getSeconds(),h12=h24%12||12;els.hh.textContent=prefs.hour24?String(h24).padStart(2,'0'):String(h12);els.mm.textContent=String(m).padStart(2,'0');els.ss.textContent=String(s).padStart(2,'0');els.ampm.textContent=h24<12?'AM':'PM';els.ampm.classList.toggle('hidden',prefs.hour24);els.dateline.textContent=d.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'});drawFace(h12,m,s)
   }
@@ -274,22 +458,75 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
     if(document.visibilityState!=='visible'&&!fromVisibility)return;const m=d.getMinutes(),s=d.getSeconds(),hourKey=`${d.toDateString()}-${d.getHours()}`,minuteKey=`${d.toDateString()}-${d.getHours()}-${m}`;
     if(prefs.chimeOn&&m===0&&hourKey!==lastChimeHour&&(s===0||fromVisibility)){if(playChime()){lastChimeHour=hourKey;log('Hourly chime played.')}}
     if(prefs.voiceOn&&minuteKey!==lastVoiceMinute&&s===0){speakTime(d);lastVoiceMinute=minuteKey}
+    const alarmKey=`${d.toDateString()}-${prefs.alarmTime}`;
+    const [alarmH,alarmM]=prefs.alarmTime.split(':').map(Number);
+    const nowMinutes=d.getHours()*60+m,alarmMinutes=alarmH*60+alarmM;
+    if(prefs.alarmOn&&nowMinutes>=alarmMinutes&&alarmKey!==lastAlarmKey&&!els.alarmOverlay.classList.contains('open')){fireAlarm()}
+    if(snoozeUntil&&Date.now()>=snoozeUntil&&!els.alarmOverlay.classList.contains('open')){snoozeUntil=null;fireAlarm()}
   }
   function tick(fromVisibility=false){const d=new Date();renderTime(d);if(!fromVisibility&&prefs.tickOn&&d.getSeconds()!==lastTickSecond)playTick();lastTickSecond=d.getSeconds();maybeAnnounce(d,fromVisibility)}
   function schedule(){clearTimeout(timer);timer=setTimeout(()=>{tick(false);schedule()},1000-(Date.now()%1000)+5)}
+  function applyClockView(){
+    els.clockCard.classList.remove('view-analog','view-digital','view-both');
+    els.clockCard.classList.add(`view-${prefs.clockView}`);
+    els.viewSegmented.querySelectorAll('.seg-btn').forEach(btn=>{
+      const active=btn.dataset.view===prefs.clockView;
+      btn.classList.toggle('active',active);
+      btn.setAttribute('aria-checked',String(active));
+    });
+  }
   function applyUI(){
-    setSwitch(els.hour24Switch,prefs.hour24);setSwitch(els.chimeSwitch,prefs.chimeOn);setSwitch(els.tickSwitch,prefs.tickOn);setSwitch(els.voiceSwitch,prefs.voiceOn);setSwitch(els.transcriptSwitch,prefs.transcriptOn);
+    setSwitch(els.hour24Switch,prefs.hour24);setSwitch(els.chimeSwitch,prefs.chimeOn);setSwitch(els.tickSwitch,prefs.tickOn);setSwitch(els.voiceSwitch,prefs.voiceOn);setSwitch(els.transcriptSwitch,prefs.transcriptOn);setSwitch(els.alarmSwitch,prefs.alarmOn);
     els.vol.value=Math.round(prefs.volume*100);els.rate.value=Math.round(prefs.rate*100);els.volReadout.textContent=`${els.vol.value}%`;els.rateReadout.textContent=`${prefs.rate.toFixed(2)}×`;
+    els.snoozeLength.value=prefs.snoozeMinutes;els.snoozeReadout.textContent=`${prefs.snoozeMinutes} minute${prefs.snoozeMinutes===1?'':'s'}`;syncAlarmPickers();
     els.listenArea.style.display=prefs.voiceOn?'flex':'none';if(prefs.transcriptOn&&prefs.voiceOn&&els.transcript.textContent)els.transcriptWrap.classList.add('show');else if(!prefs.transcriptOn||!prefs.voiceOn)els.transcriptWrap.classList.remove('show');
+    applyClockView();renderAlarmBadge();
   }
 
-  els.menuBtn.addEventListener('click',()=>{const open=!els.settingsPanel.classList.contains('open');els.settingsPanel.classList.toggle('open',open);els.menuBtn.setAttribute('aria-expanded',String(open));els.menuBtn.setAttribute('aria-label',open?'Close settings':'Open settings');if(open)els.settingsPanel.querySelector('.settings-box').scrollIntoView({behavior:'smooth',block:'nearest'})});
-  els.closeMenu.addEventListener('click',()=>{els.settingsPanel.classList.remove('open');els.menuBtn.setAttribute('aria-expanded','false');els.menuBtn.setAttribute('aria-label','Open settings')});
+  function openSettings(){
+    els.settingsOverlay.classList.add('open');
+    document.body.classList.add('modal-open');
+    els.menuBtn.setAttribute('aria-expanded','true');
+    els.settingsOverlay.scrollTop=0;
+    els.closeMenu.focus();
+  }
+  function closeSettings(){
+    els.settingsOverlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    els.menuBtn.setAttribute('aria-expanded','false');
+    els.menuBtn.focus();
+  }
+  els.menuBtn.addEventListener('click',openSettings);
+  els.closeMenu.addEventListener('click',closeSettings);
+  els.settingsDone.addEventListener('click',closeSettings);
+  els.settingsOverlay.addEventListener('click',e=>{if(e.target===els.settingsOverlay)closeSettings()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&els.settingsOverlay.classList.contains('open'))closeSettings()});
+  els.viewSegmented.addEventListener('click',e=>{
+    const btn=e.target.closest('.seg-btn');if(!btn)return;
+    prefs.clockView=btn.dataset.view;savePrefs();applyClockView();
+    log(`Clock display set to ${btn.dataset.view}.`);
+  });
   els.chimeSwitch.addEventListener('click',async()=>{prefs.chimeOn=!prefs.chimeOn;setSwitch(els.chimeSwitch,prefs.chimeOn);savePrefs();log(prefs.chimeOn?'Hourly chime is on.':'Hourly chime is off.');if(prefs.chimeOn)await unlockAudio(false)});
   els.tickSwitch.addEventListener('click',async()=>{prefs.tickOn=!prefs.tickOn;setSwitch(els.tickSwitch,prefs.tickOn);savePrefs();if(prefs.tickOn){await unlockAudio(false);if(soundReady)playTick();log('Clock ticking is on.')}else log('Clock ticking is off.')});
   els.voiceSwitch.addEventListener('click',async()=>{prefs.voiceOn=!prefs.voiceOn;setSwitch(els.voiceSwitch,prefs.voiceOn);savePrefs();applyUI();if(prefs.voiceOn){await unlockAudio(false);log('Spoken time is on. Use the speaker button beside the date.')}else log('Spoken time is off.')});
   els.transcriptSwitch.addEventListener('click',()=>{prefs.transcriptOn=!prefs.transcriptOn;setSwitch(els.transcriptSwitch,prefs.transcriptOn);savePrefs();applyUI();log(prefs.transcriptOn?'Spoken text will appear on screen whenever the clock speaks.':'Spoken text display is off.')});
-  els.hour24Switch.addEventListener('click',()=>{prefs.hour24=!prefs.hour24;setSwitch(els.hour24Switch,prefs.hour24);savePrefs();renderTime();log(prefs.hour24?'24-hour time is on.':'12-hour time is on.')});
+  els.hour24Switch.addEventListener('click',()=>{prefs.hour24=!prefs.hour24;setSwitch(els.hour24Switch,prefs.hour24);savePrefs();renderTime();renderAlarmBadge();log(prefs.hour24?'24-hour time is on.':'12-hour time is on.')});
+  els.alarmSwitch.addEventListener('click',async()=>{
+    prefs.alarmOn=!prefs.alarmOn;setSwitch(els.alarmSwitch,prefs.alarmOn);savePrefs();renderAlarmBadge();
+    if(prefs.alarmOn){await unlockAudio(false);await requestWakeLock();log(`Alarm set for ${formatAlarmTime(prefs.alarmTime,prefs.hour24)}.`)}
+    else{releaseWakeLock();log('Alarm turned off.');if(els.alarmOverlay.classList.contains('open'))dismissAlarm()}
+  });
+  els.alarmHourSelect.addEventListener('change',updateAlarmTimeFromPickers);
+  els.alarmMinuteSelect.addEventListener('change',updateAlarmTimeFromPickers);
+  els.alarmPeriod.addEventListener('click',e=>{
+    const btn=e.target.closest('.seg-btn');if(!btn)return;
+    els.alarmPeriod.querySelectorAll('.seg-btn').forEach(b=>{b.classList.toggle('active',b===btn);b.setAttribute('aria-checked',String(b===btn))});
+    updateAlarmTimeFromPickers();
+  });
+  els.snoozeLength.addEventListener('input',()=>{prefs.snoozeMinutes=Number(els.snoozeLength.value);els.snoozeReadout.textContent=`${prefs.snoozeMinutes} minute${prefs.snoozeMinutes===1?'':'s'}`});
+  els.snoozeLength.addEventListener('change',()=>{savePrefs();log(`Snooze length saved at ${prefs.snoozeMinutes} minute${prefs.snoozeMinutes===1?'':'s'}.`)});
+  els.alarmDismissBtn.addEventListener('click',dismissAlarm);
+  els.alarmSnoozeBtn.addEventListener('click',snoozeAlarm);
   els.vol.addEventListener('input',()=>{prefs.volume=Number(els.vol.value)/100;els.volReadout.textContent=`${els.vol.value}%`;if(masterGain)masterGain.gain.value=prefs.volume});els.vol.addEventListener('change',()=>{savePrefs();log(`Sound volume saved at ${els.vol.value}%.`)});
   els.rate.addEventListener('input',()=>{prefs.rate=Number(els.rate.value)/100;els.rateReadout.textContent=`${prefs.rate.toFixed(2)}×`});els.rate.addEventListener('change',()=>{savePrefs();log(`Speaking rate saved at ${prefs.rate.toFixed(2)}×.`)});
   els.voiceSelect.addEventListener('change',()=>{
@@ -303,11 +540,11 @@ select{min-width:190px;max-width:48%;padding:9px 11px;border:1px solid var(--bor
     log(voice?`Voice saved: ${voice.name} (${voice.lang}).`:'Voice saved.');
   });
   els.listenBtn.addEventListener('click',async()=>{await unlockAudio(false);speakTime(new Date())});els.sayTime.addEventListener('click',async()=>{await unlockAudio(false);speakTime(new Date())});els.previewChime.addEventListener('click',async()=>{await unlockAudio(false);if(playChime())log('Chime preview played.')});els.previewTick.addEventListener('click',async()=>{await unlockAudio(false);if(playTick())log('Tick preview played.')});
-  window.addEventListener('pointerdown',()=>{if(prefs.chimeOn||prefs.tickOn||prefs.voiceOn)unlockAudio(false)},{once:true});
+  window.addEventListener('pointerdown',()=>{if(prefs.chimeOn||prefs.tickOn||prefs.voiceOn||prefs.alarmOn)unlockAudio(false)},{once:true});
   window.addEventListener('keydown',e=>{if(e.code==='Space'&&prefs.voiceOn&&!['INPUT','SELECT','TEXTAREA','BUTTON'].includes(document.activeElement.tagName)){e.preventDefault();speakTime(new Date())}});
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){tick(true);schedule()}});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'){tick(true);schedule();if(prefs.alarmOn)requestWakeLock()}});
   if('speechSynthesis'in window){populateVoices();speechSynthesis.addEventListener('voiceschanged',populateVoices)}
-  applyUI();renderTime();tick(false);schedule();
+  populateAlarmPickers();applyUI();renderTime();tick(false);schedule();if(prefs.alarmOn)requestWakeLock();
 })();
 </script>
 </body>
